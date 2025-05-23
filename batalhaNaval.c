@@ -10,6 +10,7 @@ int checarEspaco(int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO], int l[], int c[]);
 void posicionarNavio(int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO], int l[], int c[]);
 void exibirTabuleiro(int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO]);
 void exibirCoordenadas(const char* titulo, int l[], int c[]);
+void exibirHabilidade(const char* nome, int matriz[3][5]);
 
 int main() {
     int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO];
@@ -24,8 +25,8 @@ int main() {
     // Coordenadas dos navios
     int lin_h = 1, col_h = 1;     // Horizontal
     int lin_v = 4, col_v = 3;     // Vertical
-    int lin_d1 = 0, col_d1 = 0;   // Diagonal principal (↘)
-    int lin_d2 = 2, col_d2 = 9;   // Diagonal secundária (↙)
+    int lin_d1 = 0, col_d1 = 0;   // Diagonal principal (\u2198)
+    int lin_d2 = 2, col_d2 = 9;   // Diagonal secundária (\u2199)
 
     // Matrizes para os navios
     int h_linhas[TAM_NAVIO] = {lin_h, lin_h, lin_h};
@@ -71,8 +72,32 @@ int main() {
     // Exibe coordenadas
     exibirCoordenadas("Navio Horizontal", h_linhas, h_colunas);
     exibirCoordenadas("Navio Vertical", v_linhas, v_colunas);
-    exibirCoordenadas("Navio Diagonal Principal (↘)", d1_linhas, d1_colunas);
-    exibirCoordenadas("Navio Diagonal Secundária (↙)", d2_linhas, d2_colunas);
+    exibirCoordenadas("Navio Diagonal Principal (\u2198)", d1_linhas, d1_colunas);
+    exibirCoordenadas("Navio Diagonal Secundária (\u2199)", d2_linhas, d2_colunas);
+
+    // Matrizes de habilidades (Nível Mestre)
+    int cone[3][5] = {
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 1, 0},
+        {1, 1, 1, 1, 1}
+    };
+
+    int cruz[3][5] = {
+        {0, 0, 1, 0, 0},
+        {1, 1, 1, 1, 1},
+        {0, 0, 1, 0, 0}
+    };
+
+    int octaedro[3][5] = {
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 1, 0},
+        {0, 0, 1, 0, 0}
+    };
+
+    // Exibir habilidades
+    exibirHabilidade("Cone", cone);
+    exibirHabilidade("Cruz", cruz);
+    exibirHabilidade("Octaedro", octaedro);
 
     return 0;
 }
@@ -113,5 +138,16 @@ void exibirCoordenadas(const char* titulo, int l[], int c[]) {
     printf("\nCoordenadas do %s:\n", titulo);
     for (int i = 0; i < TAM_NAVIO; i++) {
         printf("(%d, %d)\n", l[i], c[i]);
+    }
+}
+
+// Exibe a matriz de habilidade
+void exibirHabilidade(const char* nome, int matriz[3][5]) {
+    printf("\nExemplo de habilidade %s:\n", nome);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 5; j++) {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
     }
 }
